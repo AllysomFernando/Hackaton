@@ -21,33 +21,13 @@ import Toast from 'react-native-toast-message';
 
 function App() {
   const Stack = createNativeStackNavigator();
-  let [fontsLoaded] = useFonts({
-    Poppins_500Medium, Poppins_700Bold, Roboto_500Medium, Roboto_700Bold
-  })
-  React.useEffect(() => {
-    async function prepare() {
-      await SplashScreen.preventAutoHideAsync();
-    }
-    prepare();
-  }, []);
-  const onLayoutRootView = React.useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
-
-  if (!fontsLoaded) {
-    return null;
-  }
 
   return (<>
-
     <StatusBar style="light" />
     <NavigationContainer onReady={onLayoutRootView}>
           <Stack.Navigator>
             <Stack.Screen options={{ headerShown: false, gestureEnabled: false }} name="Splash" component={MySplashScreen} />
             <Stack.Screen options={{ headerShown: false, gestureEnabled: false }} name="Start" component={StartScreen} />
-            <Stack.Screen options={{ headerShown: false, gestureEnabled: false }} name="LoginScreen" component={Login} />
             <Stack.Screen options={{ headerShown: false, gestureEnabled: true }} name="Home" component={HomeScreen} />
             <Stack.Screen options={{ headerShown: false, }} name="Card" component={CardScreen} />
             <Stack.Screen options={{ headerShown: false, }} name="Events" component={EventsScreen} />
