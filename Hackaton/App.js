@@ -7,7 +7,7 @@ function App() {
 
   return (
     <View>
-        <Text>TesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTesteTeste</Text>
+        <Text>Teste</Text>
     </View>
 
   );
