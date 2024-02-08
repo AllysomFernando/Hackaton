@@ -21,7 +21,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff",
-        "package": "com.Hackaton"
+        "package": "com.hackaton.hackaton"
       }
     },
     "web": {
