@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Text, Image, Button } from "react-native";
+import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function MatchesBox() {
@@ -56,7 +56,9 @@ export default function MatchesBox() {
 						</View>
 						<View>
 							<View>
-								<Button style={styles.button} title="Consultar" />
+								<TouchableOpacity>
+									<Text style={styles.button}>Consultar</Text>
+								</TouchableOpacity>
 							</View>
 						</View>
 					</View>
@@ -96,9 +98,9 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 		borderRadius: 10,
 		paddingVertical: 5,
-		paddingLeft: 5,
+		paddingLeft: 7,
+		marginTop: 85
 	},
-
 	image: {
 		paddingVertical: 30,
 		backgroundColor: "red",

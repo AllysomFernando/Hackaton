@@ -10,6 +10,7 @@ export default function Matches() {
 			<Header />
 			<Title title="Matches" />
 			<MatchesBox />
+			<View style={{ height: 455 }}></View>
 			<Footer />
 		</View>
 	);
