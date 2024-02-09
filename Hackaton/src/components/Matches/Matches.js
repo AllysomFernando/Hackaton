@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, Text, Image, Button } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function MatchesBox() {
 	const [productData, setProductData] = useState(null);
@@ -20,17 +22,14 @@ export default function MatchesBox() {
 	useEffect(() => {
 		const saveDataToStorage = async () => {
 			const dataToSave = {
-				nameRest: "Teste 12312312",
-				valor: "teste",
-				produtor: "teste",
-				distancia: "teste",
+				nameRest: "Manga",
+				valor: "R$ 20,00",
+				produtor: "Joao",
+				distancia: "10km",
 			};
 
 			try {
-				await AsyncStorage.setItem(
-					"productData",
-					JSON.stringify(dataToSave)
-				);
+				await AsyncStorage.setItem("productData", JSON.stringify(dataToSave));
 				setProductData(dataToSave);
 			} catch (error) {
 				console.error("Error saving data:", error);
@@ -46,20 +45,22 @@ export default function MatchesBox() {
 				</View>
 				<View style={styles.information}>
 					<Text style={styles.nameRest}>{productData?.nameRest}</Text>
-					<Text style={styles.address}>{productData?.valor}</Text>
+					<Text style={styles.address}>Produtor: {productData?.produtor}</Text>
 					<View style={styles.productSection}>
 						<View>
-							<Text style={styles.product}>{productData?.productor}</Text>
+							<Text style={styles.valor}>{productData?.valor}</Text>
+							<Text style={styles.distancia}>
+								Distancia:{" "}
+								<Text style={styles.km}>{productData?.distancia}</Text>
+							</Text>
 						</View>
 						<View>
-							<Text style={styles.quantity}>{productData?.distancia}</Text>
+							<View>
+								<Button style={styles.button} title="Consultar" />
+							</View>
 						</View>
 					</View>
 				</View>
-			</View>
-			<View style={{ display: "flex", flexDirection: "row", marginTop: 20 }}>
-				<ButtonChat message={"Mandar Mensagem"} />
-				<ButtonChat message={"Recusar"} />
 			</View>
 		</View>
 	);
@@ -76,6 +77,26 @@ const styles = StyleSheet.create({
 		paddingTop: 16,
 		display: "flex",
 		flexDirection: "column",
+	},
+	valor: {
+		backgroundColor: "#5FAA00",
+		width: 100,
+		fontSize: 20,
+		color: "white",
+		fontWeight: "bold",
+		borderRadius: 10,
+		paddingVertical: 5,
+		paddingLeft: 5,
+	},
+	button: {
+		backgroundColor: "#5FAA00",
+		width: 100,
+		fontSize: 20,
+		color: "white",
+		fontWeight: "bold",
+		borderRadius: 10,
+		paddingVertical: 5,
+		paddingLeft: 5,
 	},
 
 	image: {
@@ -103,8 +124,27 @@ const styles = StyleSheet.create({
 	address: {
 		fontSize: 14,
 		marginBottom: 10,
+		marginTop: 5,
+		height: 20,
 	},
-
+	distancia: {
+		fontSize: 21,
+		marginBottom: 10,
+		marginTop: 5,
+		height: 20,
+		color: "grey",
+	},
+	km: {
+		fontSize: 21,
+		marginBottom: 10,
+		marginTop: 5,
+		height: 20,
+		backgroundColor: "#EF8F00",
+		color: "white",
+		borderRadius: 5,
+		width: 10,
+		height: 10,
+	},
 	productSection: {
 		flexDirection: "row",
 		justifyContent: "space-between",
