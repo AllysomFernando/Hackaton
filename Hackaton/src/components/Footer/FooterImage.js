@@ -6,7 +6,7 @@ export default function FooterImage({imagePath}){
     return (
         <View>
             <TouchableOpacity onPress={onPressButton}>
-                <Image source={require('../../../assets/images/Frame 1.png')}/>
+                <Image source={require({imagePath})}/>
             </TouchableOpacity>
         </View>
     )

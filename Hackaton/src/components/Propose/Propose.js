@@ -6,12 +6,11 @@ import Footer from "../Footer/FooterImage";
 export default function Propose(
 	{ nameRest },
 	{ adress },
-	{ product },
-	{ quantity },
-	{ seasonality }
+	// { product },
+	// { quantity },
+	// { seasonality }
 ) {
 	return (
-		<View>
 			<View style={styles.card}>
 				<View style={{ flexDirection: "row" }}>
 					<View style={styles.image}>
@@ -39,10 +38,6 @@ export default function Propose(
 					<ButtonChat message={"Recusar"} />
 				</View>
 			</View>
-			<View>
-				<Footer />
-			</View>
-		</View>
 	);
 }
 
