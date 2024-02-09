@@ -12,72 +12,11 @@ import { useAppContext } from "../../../context";
 import { useFocusEffect } from "@react-navigation/native";
 
 export default function MatchesBox() {
-	const [productData, setProductData] = useState([]);
 	const { restaurantData, setRestaurantData } = useAppContext();
-	const [fruitName, setFruitName] = useState("");
-
-	useFocusEffect(
-		useCallback(() => {
-			const fetchData = async () => {
-				try {
-					const savedData = await AsyncStorage.getItem("productData");
-					if (savedData) {
-						setProductData([
-							...productData,
-							...restaurantData,
-							JSON.parse(savedData),
-						]);
-					}
-				} catch (error) {
-					console.error("Error retrieving data:", error);
-				}
-			};
-			fetchData();
-		}, [])
-	);
-
-	useEffect(() => {
-		const fetchData = () => {
-			try {
-				setProductData([
-					...productData,
-					...restaurantData,
-					JSON.parse(savedData),
-				]);
-			} catch (error) {
-				console.error("Error retrieving data:", error);
-			}
-		};
-		fetchData();
-	}, []);
-
-	useEffect(() => {
-		const saveDataToStorage = () => {
-			const dataToSave = [
-				{
-					id: 1,
-					nameRest: fruitName,
-					address: "Avenida Brasil, 1234, São Paulo - SP",
-					quantity: "10",
-					seasonality: "3 meses",
-					product: "Restaurante do George",
-					un: "10",
-					distancia: "5 km",
-					valor: "R$ 10,00",
-				},
-			];
-			try {
-				setProductData(dataToSave);
-			} catch (error) {
-				console.error("Error saving data:", error);
-			}
-		};
-		saveDataToStorage();
-	}, []);
 
 	return (
 		<View style={styles.card232}>
-			{productData.map((product, index) => (
+			{restaurantData.map((product, index) => (
 				<View style={styles.card}>
 					<View key={index} style={{ flexDirection: "row" }}>
 						<View style={styles.image}>
