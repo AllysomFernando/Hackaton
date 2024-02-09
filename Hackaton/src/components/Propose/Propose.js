@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Text, StatusBar, Image } from "react-native";
-import ButtonChat from "../ButtonConversar/ButtonChat";
+import {
+	View,
+	StyleSheet,
+	Text,
+	Image,
+	TouchableOpacity,
+	Modal,
+	Pressable,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Propose() {
@@ -20,52 +27,60 @@ export default function Propose() {
 		fetchData();
 	}, []);
 
-	useEffect(() => {
-		const saveDataToStorage = async () => {
-			const dataToSave = {
-				nameRest: "Teste 12312312",
-				address: "teste",
-				quantity: "teste",
-				seasonality: "teste",
-				product: "teste",
-				un: "10",
-			};
-
-			try {
-				await AsyncStorage.setItem(
-					"restaurantData",
-					JSON.stringify(dataToSave)
-				);
-				setRestaurantData(dataToSave);
-			} catch (error) {
-				console.error("Error saving data:", error);
-			}
+	const saveDataToStorage = async () => {
+		const dataToSave = {
+			nameRest: "Manga",
+			address: "Avenida Brasil, 1234, São Paulo - SP",
+			quantity: "10",
+			seasonality: "3 meses",
+			product: "manga",
+			un: "10",
 		};
-        saveDataToStorage();
+
+		try {
+			await AsyncStorage.setItem("restaurantData", JSON.stringify(dataToSave));
+			setRestaurantData(dataToSave);
+		} catch (error) {
+			console.error("Error saving data:", error);
+		}
+	};
+
+	useEffect(() => {
+		saveDataToStorage();
 	}, []);
+
+	const handleReject = () => {
+		console.log("Reject button pressed");
+		setModalVisible(true);
+		setCardVisible(false);
+	};
+
 	return (
-		<View style={styles.card}>
-			<View style={{ flexDirection: "row" }}>
-				<View style={styles.image}>
-					<Image />
-				</View>
-				<View style={styles.information}>
-					<Text style={styles.nameRest}>{restaurantData?.nameRest}</Text>
-					<Text style={styles.address}>{restaurantData?.address}</Text>
-					<View style={styles.productSection}>
-						<View>
-							<Text style={styles.product}>{restaurantData?.product}</Text>
-						</View>
-						<View>
-							<Text style={styles.quantity}>{restaurantData?.quantity}</Text>
-							<Text style={styles.un}>unidades</Text>
+		<View style={styles.container} transparent={false}>
+			<View style={styles.card}>
+				<View style={{ flexDirection: "row" }}>
+					<View style={styles.image}>
+						<Image />
+					</View>
+					<View style={styles.information}>
+						<Text style={styles.nameRest}>{restaurantData?.nameRest}</Text>
+						<Text style={styles.address}>{restaurantData?.address}</Text>
+						<View style={styles.productSection}>
+							<View>
+								<Text style={styles.product}>{restaurantData?.product}</Text>
+							</View>
+							<View>
+								<Text style={styles.quantity}>{restaurantData?.quantity}</Text>
+								<Text style={styles.un}>unidades</Text>
+							</View>
 						</View>
 					</View>
 				</View>
-			</View>
-			<View style={{ display: "flex", flexDirection: "row", marginTop: 20 }}>
-				<ButtonChat message={"Mandar Mensagem"} />
-				<ButtonChat message={"Recusar"} />
+				<View style={{ display: "flex", flexDirection: "row", marginTop: 20 }}>
+					<TouchableOpacity onPress={handleReject}>
+						<Text style={styles.button}>Recusar</Text>
+					</TouchableOpacity>
+				</View>
 			</View>
 		</View>
 	);
@@ -109,6 +124,7 @@ const styles = StyleSheet.create({
 	address: {
 		fontSize: 14,
 		marginBottom: 10,
+		marginTop: 10,
 	},
 
 	productSection: {
@@ -141,5 +157,22 @@ const styles = StyleSheet.create({
 		display: "flex",
 		paddingLeft: 5,
 		alignSelf: "flex-end",
+	},
+	button: {
+		backgroundColor: "red",
+		marginTop: 20,
+		width: 100,
+		height: 30,
+		fontSize: 20,
+		color: "white",
+		paddingLeft: 15,
+		paddingTop: 5,
+	},
+	textStyle: {
+		color: "black",
+		backgroundColor: "white",
+		width: 100,
+		height: 30,
+		textAlign: "center",
 	},
 });

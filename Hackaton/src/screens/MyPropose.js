@@ -9,11 +9,9 @@ function MyProducts() {
 	return (
 		<View style={{flexDirection: "column"}}>
 			<Header />
-			<MyTitle title="Suas Propostas" />
+			<MyTitle />
 			<Propose nameRest="nameRest" adress="adress"/>
-			<View style={{height: 455 }}></View>
-            <Footer/> 
-            
+			<View style={{height: 455 }}></View>       
 		</View>
 	);
 }

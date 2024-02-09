@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
+import {
+	View,
+	StyleSheet,
+	Text,
+	StatusBar,
+	Image,
+	TouchableOpacity,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function MatchesBox() {
@@ -25,7 +32,7 @@ export default function MatchesBox() {
 				nameRest: "Manga",
 				valor: "R$ 20,00",
 				produtor: "Joao",
-				distancia: "10km",
+				distancia: "10 km",
 			};
 
 			try {
@@ -49,18 +56,16 @@ export default function MatchesBox() {
 					<View style={styles.productSection}>
 						<View>
 							<Text style={styles.valor}>{productData?.valor}</Text>
-							<Text style={styles.distancia}>
-								Distancia:{" "}
+							<Text style={styles.component2}>
+								Distância:{" "}
 								<Text style={styles.km}>{productData?.distancia}</Text>
 							</Text>
 						</View>
-						<View>
-							<View>
-								<TouchableOpacity>
-									<Text style={styles.button}>Consultar</Text>
-								</TouchableOpacity>
-							</View>
-						</View>
+					</View>
+					<View>
+						<TouchableOpacity style={styles.container}>
+							<Text style={styles.consultar}>Consultar</Text>
+						</TouchableOpacity>
 					</View>
 				</View>
 			</View>
@@ -69,6 +74,19 @@ export default function MatchesBox() {
 }
 
 const styles = StyleSheet.create({
+	consultar: {
+		backgroundColor: "#5FAA00",
+		width: 100,
+		fontSize: 20,
+		color: "white",
+		fontWeight: "bold",
+		borderRadius: 10,
+		paddingVertical: 10,
+		paddingLeft: 5,
+		height: 40,
+		marginTop: 30,
+		marginLeft: 150,
+	},
 	card: {
 		borderWidth: 0.5,
 		borderColor: "#8C8C8C",
@@ -80,6 +98,9 @@ const styles = StyleSheet.create({
 		display: "flex",
 		flexDirection: "column",
 	},
+	component2: {
+		height: 20,
+	},
 	valor: {
 		backgroundColor: "#5FAA00",
 		width: 100,
@@ -90,16 +111,16 @@ const styles = StyleSheet.create({
 		paddingVertical: 5,
 		paddingLeft: 5,
 	},
-	button: {
-		backgroundColor: "#5FAA00",
-		width: 100,
-		fontSize: 20,
+	km: {
+		backgroundColor: "#EF8F00",
+		width: 50,
+		fontSize: 15,
 		color: "white",
 		fontWeight: "bold",
 		borderRadius: 10,
-		paddingVertical: 5,
-		paddingLeft: 7,
-		marginTop: 85
+		paddingVertical: 10,
+		paddingLeft: 5,
+		marginTop: 5,
 	},
 	image: {
 		paddingVertical: 30,
@@ -129,24 +150,7 @@ const styles = StyleSheet.create({
 		marginTop: 5,
 		height: 20,
 	},
-	distancia: {
-		fontSize: 21,
-		marginBottom: 10,
-		marginTop: 5,
-		height: 20,
-		color: "grey",
-	},
-	km: {
-		fontSize: 21,
-		marginBottom: 10,
-		marginTop: 5,
-		height: 20,
-		backgroundColor: "#EF8F00",
-		color: "white",
-		borderRadius: 5,
-		width: 10,
-		height: 10,
-	},
+
 	productSection: {
 		flexDirection: "row",
 		justifyContent: "space-between",
