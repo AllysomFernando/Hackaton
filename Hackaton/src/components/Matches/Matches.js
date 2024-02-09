@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Text, Image, Button } from "react-native";
+import {
+	View,
+	StyleSheet,
+	Text,
+	StatusBar,
+	Image,
+	TouchableOpacity,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function MatchesBox() {
-	const [productData, setProductData] = useState(null);
+	const [productData, setProductData] = useState([]);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -21,13 +28,15 @@ export default function MatchesBox() {
 
 	useEffect(() => {
 		const saveDataToStorage = async () => {
-			const dataToSave = {
-				nameRest: "Manga",
-				valor: "R$ 20,00",
-				produtor: "Joao",
-				distancia: "10km",
-			};
+			const dataToSave = [
+				{
+					nameRest: "Jiló",
+					valor: "R$ 20,00",
+					produtor: "João Luiz",
+					distancia: "10 km",
+				},
 
+			];
 			try {
 				await AsyncStorage.setItem("productData", JSON.stringify(dataToSave));
 				setProductData(dataToSave);
@@ -37,36 +46,57 @@ export default function MatchesBox() {
 		};
 		saveDataToStorage();
 	}, []);
+
 	return (
-		<View style={styles.card}>
-			<View style={{ flexDirection: "row" }}>
-				<View style={styles.image}>
-					<Image />
-				</View>
-				<View style={styles.information}>
-					<Text style={styles.nameRest}>{productData?.nameRest}</Text>
-					<Text style={styles.address}>Produtor: {productData?.produtor}</Text>
-					<View style={styles.productSection}>
-						<View>
-							<Text style={styles.valor}>{productData?.valor}</Text>
-							<Text style={styles.distancia}>
-								Distancia:{" "}
-								<Text style={styles.km}>{productData?.distancia}</Text>
-							</Text>
+		<View style={styles.card232}>
+			{productData.map((product, index) => (
+				<View style={styles.card}>
+					<View key={index} style={{ flexDirection: "row" }}>
+						<View style={styles.image}>
+							<Image />
 						</View>
-						<View>
+						<View style={styles.information}>
+							<Text style={styles.nameRest}>{product.nameRest}</Text>
+							<Text style={styles.address}>Produtor: {product.produtor}</Text>
+							<View style={styles.productSection}>
+								<View>
+									<Text style={styles.valor}>{product.valor}</Text>
+									<Text style={styles.component2}>
+										Distância:{" "}
+										<Text style={styles.km}>{product.distancia}</Text>
+									</Text>
+								</View>
+							</View>
 							<View>
-								<Button style={styles.button} title="Consultar" />
+								<TouchableOpacity style={styles.container}>
+									<Text style={styles.consultar}>Consultar</Text>
+								</TouchableOpacity>
 							</View>
 						</View>
 					</View>
 				</View>
-			</View>
+			))}
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
+	card232: {
+		marginTop: 20,
+	},
+	consultar: {
+		backgroundColor: "#5FAA00",
+		width: 100,
+		fontSize: 20,
+		color: "white",
+		fontWeight: "bold",
+		borderRadius: 10,
+		paddingVertical: 10,
+		paddingLeft: 5,
+		height: 40,
+		marginTop: 30,
+		marginLeft: 150,
+	},
 	card: {
 		borderWidth: 0.5,
 		borderColor: "#8C8C8C",
@@ -77,6 +107,10 @@ const styles = StyleSheet.create({
 		paddingTop: 16,
 		display: "flex",
 		flexDirection: "column",
+		paddingTop: 16,
+	},
+	component2: {
+		height: 20,
 	},
 	valor: {
 		backgroundColor: "#5FAA00",
@@ -88,17 +122,17 @@ const styles = StyleSheet.create({
 		paddingVertical: 5,
 		paddingLeft: 5,
 	},
-	button: {
-		backgroundColor: "#5FAA00",
-		width: 100,
-		fontSize: 20,
+	km: {
+		backgroundColor: "#EF8F00",
+		width: 50,
+		fontSize: 15,
 		color: "white",
 		fontWeight: "bold",
 		borderRadius: 10,
-		paddingVertical: 5,
+		paddingVertical: 10,
 		paddingLeft: 5,
+		marginTop: 5,
 	},
-
 	image: {
 		paddingVertical: 30,
 		backgroundColor: "red",
@@ -127,24 +161,7 @@ const styles = StyleSheet.create({
 		marginTop: 5,
 		height: 20,
 	},
-	distancia: {
-		fontSize: 21,
-		marginBottom: 10,
-		marginTop: 5,
-		height: 20,
-		color: "grey",
-	},
-	km: {
-		fontSize: 21,
-		marginBottom: 10,
-		marginTop: 5,
-		height: 20,
-		backgroundColor: "#EF8F00",
-		color: "white",
-		borderRadius: 5,
-		width: 10,
-		height: 10,
-	},
+
 	productSection: {
 		flexDirection: "row",
 		justifyContent: "space-between",

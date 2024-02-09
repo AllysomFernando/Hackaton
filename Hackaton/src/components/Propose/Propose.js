@@ -1,10 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Text, StatusBar, Image } from "react-native";
-import ButtonChat from "../ButtonConversar/ButtonChat";
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+function ProposeItem({ restaurantData }) {
+	return (
+		<View style={styles.card}>
+			<View style={{ flexDirection: "row" }}>
+				<View style={styles.image}>
+					<Image />
+				</View>
+				<View style={styles.information}>
+					<Text style={styles.nameRest}>{restaurantData.nameRest}</Text>
+					<Text style={styles.address}>{restaurantData.address}</Text>
+					<View style={styles.productSection}>
+						<View>
+							<Text style={styles.product}>{restaurantData.product}</Text>
+						</View>
+						<View>
+							<Text style={styles.quantity}>{restaurantData.quantity}</Text>
+							<Text style={styles.un}>unidades</Text>
+						</View>
+					</View>
+				</View>
+			</View>
+			<View style={{ display: "flex", flexDirection: "row", marginTop: 20 }}>
+				<TouchableOpacity onPress={() => console.log("Reject button pressed")}>
+					<Text style={styles.button}>Recusar</Text>
+				</TouchableOpacity>
+			</View>
+		</View>
+	);
+}
+
 export default function Propose() {
-	const [restaurantData, setRestaurantData] = useState(null);
+	const [restaurantData, setRestaurantData] = useState([]);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -22,14 +51,17 @@ export default function Propose() {
 
 	useEffect(() => {
 		const saveDataToStorage = async () => {
-			const dataToSave = {
-				nameRest: "Teste 12312312",
-				address: "teste",
-				quantity: "teste",
-				seasonality: "teste",
-				product: "teste",
-				un: "10",
-			};
+			const dataToSave = [
+				{
+					id: 1,
+					nameRest: "Mirtilo",
+					address: "Avenida Brasil, 1234, São Paulo - SP",
+					quantity: "10",
+					seasonality: "3 meses",
+					product: "Mirtilo",
+					un: "10",
+				},
+			];
 
 			try {
 				await AsyncStorage.setItem(
@@ -41,32 +73,15 @@ export default function Propose() {
 				console.error("Error saving data:", error);
 			}
 		};
-        saveDataToStorage();
+
+		saveDataToStorage();
 	}, []);
+
 	return (
-		<View style={styles.card}>
-			<View style={{ flexDirection: "row" }}>
-				<View style={styles.image}>
-					<Image />
-				</View>
-				<View style={styles.information}>
-					<Text style={styles.nameRest}>{restaurantData?.nameRest}</Text>
-					<Text style={styles.address}>{restaurantData?.address}</Text>
-					<View style={styles.productSection}>
-						<View>
-							<Text style={styles.product}>{restaurantData?.product}</Text>
-						</View>
-						<View>
-							<Text style={styles.quantity}>{restaurantData?.quantity}</Text>
-							<Text style={styles.un}>unidades</Text>
-						</View>
-					</View>
-				</View>
-			</View>
-			<View style={{ display: "flex", flexDirection: "row", marginTop: 20 }}>
-				<ButtonChat message={"Mandar Mensagem"} />
-				<ButtonChat message={"Recusar"} />
-			</View>
+		<View style={styles.container}>
+			{restaurantData.map((item, index) => (
+				<ProposeItem key={index} restaurantData={item} />
+			))}
 		</View>
 	);
 }
@@ -109,6 +124,7 @@ const styles = StyleSheet.create({
 	address: {
 		fontSize: 14,
 		marginBottom: 10,
+		marginTop: 10,
 	},
 
 	productSection: {
@@ -141,5 +157,22 @@ const styles = StyleSheet.create({
 		display: "flex",
 		paddingLeft: 5,
 		alignSelf: "flex-end",
+	},
+	button: {
+		backgroundColor: "red",
+		marginTop: 20,
+		width: 100,
+		height: 30,
+		fontSize: 20,
+		color: "white",
+		paddingLeft: 15,
+		paddingTop: 5,
+	},
+	textStyle: {
+		color: "black",
+		backgroundColor: "white",
+		width: 100,
+		height: 30,
+		textAlign: "center",
 	},
 });
