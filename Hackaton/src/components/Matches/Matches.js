@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
 	View,
 	StyleSheet,
@@ -8,17 +8,42 @@ import {
 	TouchableOpacity,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAppContext } from "../../../context";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function MatchesBox() {
 	const [productData, setProductData] = useState([]);
+	const { restaurantData, setRestaurantData } = useAppContext();
+	const [fruitName, setFruitName] = useState("");
+
+	useFocusEffect(
+		useCallback(() => {
+			const fetchData = async () => {
+				try {
+					const savedData = await AsyncStorage.getItem("productData");
+					if (savedData) {
+						setProductData([
+							...productData,
+							...restaurantData,
+							JSON.parse(savedData),
+						]);
+					}
+				} catch (error) {
+					console.error("Error retrieving data:", error);
+				}
+			};
+			fetchData();
+		}, [])
+	);
 
 	useEffect(() => {
-		const fetchData = async () => {
+		const fetchData = () => {
 			try {
-				const savedData = await AsyncStorage.getItem("productData");
-				if (savedData) {
-					setProductData(JSON.parse(savedData));
-				}
+				setProductData([
+					...productData,
+					...restaurantData,
+					JSON.parse(savedData),
+				]);
 			} catch (error) {
 				console.error("Error retrieving data:", error);
 			}
@@ -27,18 +52,21 @@ export default function MatchesBox() {
 	}, []);
 
 	useEffect(() => {
-		const saveDataToStorage = async () => {
+		const saveDataToStorage = () => {
 			const dataToSave = [
 				{
-					nameRest: "Jiló",
-					valor: "R$ 20,00",
-					produtor: "João Luiz",
-					distancia: "10 km",
+					id: 1,
+					nameRest: fruitName,
+					address: "Avenida Brasil, 1234, São Paulo - SP",
+					quantity: "10",
+					seasonality: "3 meses",
+					product: "Restaurante do George",
+					un: "10",
+					distancia: "5 km",
+					valor: "R$ 10,00",
 				},
-
 			];
 			try {
-				await AsyncStorage.setItem("productData", JSON.stringify(dataToSave));
 				setProductData(dataToSave);
 			} catch (error) {
 				console.error("Error saving data:", error);

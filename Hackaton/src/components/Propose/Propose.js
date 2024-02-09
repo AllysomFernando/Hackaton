@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
+import { useAppContext } from "../../../context";
 
 function ProposeItem({ restaurantData }) {
 	return (
@@ -33,7 +35,7 @@ function ProposeItem({ restaurantData }) {
 }
 
 export default function Propose() {
-	const [restaurantData, setRestaurantData] = useState([]);
+	const { restaurantData, setRestaurantData } = useAppContext();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -50,7 +52,7 @@ export default function Propose() {
 	}, []);
 
 	useEffect(() => {
-		const saveDataToStorage = async () => {
+		const saveDataToStorage = () => {
 			const dataToSave = [
 				{
 					id: 1,
@@ -58,20 +60,13 @@ export default function Propose() {
 					address: "Avenida Brasil, 1234, São Paulo - SP",
 					quantity: "10",
 					seasonality: "3 meses",
-					product: "Mirtilo",
+					product: "Restaurante do Cleber",
 					un: "10",
+					produtor: "Cleber",
 				},
 			];
 
-			try {
-				await AsyncStorage.setItem(
-					"restaurantData",
-					JSON.stringify(dataToSave)
-				);
-				setRestaurantData(dataToSave);
-			} catch (error) {
-				console.error("Error saving data:", error);
-			}
+			setRestaurantData([...restaurantData, dataToSave[0]]);
 		};
 
 		saveDataToStorage();

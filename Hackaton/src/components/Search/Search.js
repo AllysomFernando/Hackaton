@@ -1,39 +1,71 @@
-import { View, StyleSheet, Text, TextInput, Input, RCTView, FlatList } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, Text, TextInput, Button } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAppContext } from "../../../context";
 
+export default function Search({ onSave }) {
+	const [fruitName, setFruitName] = useState("");
 
+	const { restaurantData, setRestaurantData } = useAppContext();
 
-export default function Search() {
-        return (
-            <View style={styles.box}>
-                <View style={styles.barraPesquisa}>
-                    <TextInput placeholder="Qual produto" style={{ padding: 10 }} on />
-                </View>
-                <View style={{borderColor:"black", borderWidth:"1px, paddingHorizontal:2"}}></View>
-                <View >
-                    <Text style={{padding:10,}}>Pitaya</Text>
-                </View>
-            </View>
-        )
-    }
+	const handleSubmit = async () => {
+		try {
+			setRestaurantData([
+				...restaurantData,
+				{
+					id: 1,
+					nameRest: fruitName,
+					address: "Avenida Brasil, 1234, São Paulo - SP",
+					quantity: "10",
+					seasonality: "3 meses",
+					product: "Restaurante do George",
+					un: "10",
+					distancia: "5 km",
+					valor: "R$ 10,00",
+				},
+			]);
+			setFruitName("");
+		} catch (error) {
+			console.error("Error saving data:", error);
+		}
+	};
 
-    const styles = StyleSheet.create({
-        box: {
-            display: "flex",
-            backgroundColor: "#F0F0F0",
-            marginHorizontal: 20,
-            borderRadius: 10,
-        },
+	return (
+		<View style={styles.formContainer}>
+			<TextInput
+				style={styles.input}
+				placeholder="Nome da Fruta"
+				value={fruitName}
+				onChangeText={(text) => setFruitName(text)}
+			/>
+			<Button title="Salvar Fruta" onPress={handleSubmit} />
+		</View>
+	);
+}
 
-        container: {
-            flex: 1,
-            paddingTop: 22,
-        },
-        item: {
-            padding: 2,
-            fontSize: 12,
-            height: 15,
-        },
-
-
-    })
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		padding: 20,
+	},
+	formContainer: {
+		marginBottom: 20,
+	},
+	input: {
+		height: 40,
+		borderColor: "gray",
+		borderWidth: 1,
+		marginBottom: 10,
+		paddingHorizontal: 10,
+	},
+	restaurantList: {
+		flex: 1,
+	},
+	restaurantItem: {
+		marginBottom: 10,
+		borderWidth: 1,
+		borderColor: "lightgray",
+		padding: 10,
+		borderRadius: 5,
+	},
+});
