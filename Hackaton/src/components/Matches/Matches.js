@@ -30,17 +30,12 @@ export default function MatchesBox() {
 		const saveDataToStorage = async () => {
 			const dataToSave = [
 				{
-					nameRest: "Manga",
+					nameRest: "Jiló",
 					valor: "R$ 20,00",
-					produtor: "Joao",
+					produtor: "João Luiz",
 					distancia: "10 km",
 				},
-				{
-					nameRest: "Manga Verde",
-					valor: "R$ 33,00",
-					produtor: "Paulo",
-					distancia: "15 km",
-				},
+
 			];
 			try {
 				await AsyncStorage.setItem("productData", JSON.stringify(dataToSave));

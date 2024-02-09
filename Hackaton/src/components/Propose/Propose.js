@@ -1,17 +1,39 @@
 import React, { useEffect, useState } from "react";
-import {
-	View,
-	StyleSheet,
-	Text,
-	Image,
-	TouchableOpacity,
-	Modal,
-	Pressable,
-} from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+function ProposeItem({ restaurantData }) {
+	return (
+		<View style={styles.card}>
+			<View style={{ flexDirection: "row" }}>
+				<View style={styles.image}>
+					<Image />
+				</View>
+				<View style={styles.information}>
+					<Text style={styles.nameRest}>{restaurantData.nameRest}</Text>
+					<Text style={styles.address}>{restaurantData.address}</Text>
+					<View style={styles.productSection}>
+						<View>
+							<Text style={styles.product}>{restaurantData.product}</Text>
+						</View>
+						<View>
+							<Text style={styles.quantity}>{restaurantData.quantity}</Text>
+							<Text style={styles.un}>unidades</Text>
+						</View>
+					</View>
+				</View>
+			</View>
+			<View style={{ display: "flex", flexDirection: "row", marginTop: 20 }}>
+				<TouchableOpacity onPress={() => console.log("Reject button pressed")}>
+					<Text style={styles.button}>Recusar</Text>
+				</TouchableOpacity>
+			</View>
+		</View>
+	);
+}
+
 export default function Propose() {
-	const [restaurantData, setRestaurantData] = useState(null);
+	const [restaurantData, setRestaurantData] = useState([]);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -27,61 +49,39 @@ export default function Propose() {
 		fetchData();
 	}, []);
 
-	const saveDataToStorage = async () => {
-		const dataToSave = {
-			nameRest: "Manga",
-			address: "Avenida Brasil, 1234, São Paulo - SP",
-			quantity: "10",
-			seasonality: "3 meses",
-			product: "manga",
-			un: "10",
+	useEffect(() => {
+		const saveDataToStorage = async () => {
+			const dataToSave = [
+				{
+					id: 1,
+					nameRest: "Mirtilo",
+					address: "Avenida Brasil, 1234, São Paulo - SP",
+					quantity: "10",
+					seasonality: "3 meses",
+					product: "Mirtilo",
+					un: "10",
+				},
+			];
+
+			try {
+				await AsyncStorage.setItem(
+					"restaurantData",
+					JSON.stringify(dataToSave)
+				);
+				setRestaurantData(dataToSave);
+			} catch (error) {
+				console.error("Error saving data:", error);
+			}
 		};
 
-		try {
-			await AsyncStorage.setItem("restaurantData", JSON.stringify(dataToSave));
-			setRestaurantData(dataToSave);
-		} catch (error) {
-			console.error("Error saving data:", error);
-		}
-	};
-
-	useEffect(() => {
 		saveDataToStorage();
 	}, []);
 
-	const handleReject = () => {
-		console.log("Reject button pressed");
-		setModalVisible(true);
-		setCardVisible(false);
-	};
-
 	return (
-		<View style={styles.container} transparent={false}>
-			<View style={styles.card}>
-				<View style={{ flexDirection: "row" }}>
-					<View style={styles.image}>
-						<Image />
-					</View>
-					<View style={styles.information}>
-						<Text style={styles.nameRest}>{restaurantData?.nameRest}</Text>
-						<Text style={styles.address}>{restaurantData?.address}</Text>
-						<View style={styles.productSection}>
-							<View>
-								<Text style={styles.product}>{restaurantData?.product}</Text>
-							</View>
-							<View>
-								<Text style={styles.quantity}>{restaurantData?.quantity}</Text>
-								<Text style={styles.un}>unidades</Text>
-							</View>
-						</View>
-					</View>
-				</View>
-				<View style={{ display: "flex", flexDirection: "row", marginTop: 20 }}>
-					<TouchableOpacity onPress={handleReject}>
-						<Text style={styles.button}>Recusar</Text>
-					</TouchableOpacity>
-				</View>
-			</View>
+		<View style={styles.container}>
+			{restaurantData.map((item, index) => (
+				<ProposeItem key={index} restaurantData={item} />
+			))}
 		</View>
 	);
 }
