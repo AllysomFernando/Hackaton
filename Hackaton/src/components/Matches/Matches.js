@@ -10,7 +10,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function MatchesBox() {
-	const [productData, setProductData] = useState(null);
+	const [productData, setProductData] = useState([]);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -28,13 +28,20 @@ export default function MatchesBox() {
 
 	useEffect(() => {
 		const saveDataToStorage = async () => {
-			const dataToSave = {
-				nameRest: "Manga",
-				valor: "R$ 20,00",
-				produtor: "Joao",
-				distancia: "10 km",
-			};
-
+			const dataToSave = [
+				{
+					nameRest: "Manga",
+					valor: "R$ 20,00",
+					produtor: "Joao",
+					distancia: "10 km",
+				},
+				{
+					nameRest: "Manga Verde",
+					valor: "R$ 33,00",
+					produtor: "Paulo",
+					distancia: "15 km",
+				},
+			];
 			try {
 				await AsyncStorage.setItem("productData", JSON.stringify(dataToSave));
 				setProductData(dataToSave);
@@ -44,36 +51,44 @@ export default function MatchesBox() {
 		};
 		saveDataToStorage();
 	}, []);
+
 	return (
-		<View style={styles.card}>
-			<View style={{ flexDirection: "row" }}>
-				<View style={styles.image}>
-					<Image />
-				</View>
-				<View style={styles.information}>
-					<Text style={styles.nameRest}>{productData?.nameRest}</Text>
-					<Text style={styles.address}>Produtor: {productData?.produtor}</Text>
-					<View style={styles.productSection}>
-						<View>
-							<Text style={styles.valor}>{productData?.valor}</Text>
-							<Text style={styles.component2}>
-								Distância:{" "}
-								<Text style={styles.km}>{productData?.distancia}</Text>
-							</Text>
+		<View style={styles.card232}>
+			{productData.map((product, index) => (
+				<View style={styles.card}>
+					<View key={index} style={{ flexDirection: "row" }}>
+						<View style={styles.image}>
+							<Image />
+						</View>
+						<View style={styles.information}>
+							<Text style={styles.nameRest}>{product.nameRest}</Text>
+							<Text style={styles.address}>Produtor: {product.produtor}</Text>
+							<View style={styles.productSection}>
+								<View>
+									<Text style={styles.valor}>{product.valor}</Text>
+									<Text style={styles.component2}>
+										Distância:{" "}
+										<Text style={styles.km}>{product.distancia}</Text>
+									</Text>
+								</View>
+							</View>
+							<View>
+								<TouchableOpacity style={styles.container}>
+									<Text style={styles.consultar}>Consultar</Text>
+								</TouchableOpacity>
+							</View>
 						</View>
 					</View>
-					<View>
-						<TouchableOpacity style={styles.container}>
-							<Text style={styles.consultar}>Consultar</Text>
-						</TouchableOpacity>
-					</View>
 				</View>
-			</View>
+			))}
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
+	card232: {
+		marginTop: 20,
+	},
 	consultar: {
 		backgroundColor: "#5FAA00",
 		width: 100,
@@ -97,6 +112,7 @@ const styles = StyleSheet.create({
 		paddingTop: 16,
 		display: "flex",
 		flexDirection: "column",
+		paddingTop: 16,
 	},
 	component2: {
 		height: 20,
