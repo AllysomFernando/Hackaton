@@ -1,26 +1,37 @@
 import React from "react";
 import { View, StyleSheet, Text, StatusBar,Image } from "react-native";
 import ButtonChat from "../ButtonConversar/ButtonChat";
+import Footer from "../Footer/FooterImage";
 
 export default function Propose({nameRest},{adress}){ //,{description},{product},{quantity},{seasonality}
     return (
-        <View style={styles.card} >
-            <View style={styles.image}>
-                <Image></Image> 
-            </View>
-            <View style={styles.information}>
-                <Text style={styles.nameRest}>{nameRest}</Text>
-                <Text style={styles.adress}>teste endereço</Text>  
-                <View style={styles.productSection}>
-                    <View>
-                        <Text style={styles.product}>teste produto</Text>
+        <View>
+            <View style={styles.card} >
+                <View style={{flexDirection: 'row'}}> 
+                    <View style={styles.image}>
+                        <Image></Image> 
                     </View>
-                    <View>
-                        <Text style={styles.quantity}>teste un</Text>
-                        <Text style={styles.un}>unidades</Text>
+                    <View style={styles.information}>
+                        <Text style={styles.nameRest}>{nameRest}</Text>
+                        <Text style={styles.adress}>teste endereço</Text>  
+                        <View style={styles.productSection}>
+                            <View>
+                                <Text style={styles.product}>teste produto</Text>
+                            </View>
+                            <View>
+                                <Text style={styles.quantity}>teste un</Text>
+                                <Text style={styles.un}>unidades</Text>
+                            </View>
+                        </View>
                     </View>
                 </View>
-                <ButtonChat/>
+                <View style={{display: "flex", flexDirection: "row", marginTop: 20}}>
+                    <ButtonChat message={"Mandar Mensagem"}/>
+                    <ButtonChat message={"Recusar"}/>
+                </View>
+            </View>
+            <View>
+                <Footer/>
             </View>
         </View>
     )
@@ -34,9 +45,9 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         paddingHorizontal: 16,
         height: 180,
-        paddingVertical: 16,
+        paddingTop: 16,
         display: "flex",
-        flexDirection: "row",
+        flexDirection: "collumn",
     },
 
     image: {
@@ -80,7 +91,6 @@ const styles = StyleSheet.create({
         opacity: 0.7,
         paddingHorizontal: 5,
         paddingVertical: 8,
-        borderRadius: 4,
         alignItems: 'center',
     },
 

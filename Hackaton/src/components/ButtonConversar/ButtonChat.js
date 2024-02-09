@@ -1,25 +1,26 @@
 import React from "react";
-import { View, StyleSheet, Text, StatusBar , Button} from "react-native";
+import { View, StyleSheet, Text, StatusBar, TouchableOpacity} from "react-native";
 
-export default function ButtonChat(){
+export default function ButtonChat({message}){
     const onPressButton = () => {
         Alert.alert('Botão pressionado!');
       };
     
-    return (
-        <View>
-            <Button title="Pressione-me" onPress={onPressButton} />
+      return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <TouchableOpacity onPress={onPressButton} style={styles.container}>
+            <Text style={{ color: 'white' }}>{message}</Text>
+          </TouchableOpacity>
         </View>
-    )
+      );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, 
-        justifyContent: 'center', 
+        padding: 10, 
+        backgroundColor: '#5FAA00',
+        borderRadius: 10,
+        width: 150,
         alignItems: 'center',
-        position: "absolute",
-        marginLeft: -20,
-        marginBottom: -20,
     },
 })
