@@ -1,6 +1,43 @@
 import React from "react";
 
 export default function MatchesBox() {
+	const [productData, setProductData] = useState(null);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const savedData = await AsyncStorage.getItem("productData");
+				if (savedData) {
+					setProductData(JSON.parse(savedData));
+				}
+			} catch (error) {
+				console.error("Error retrieving data:", error);
+			}
+		};
+		fetchData();
+	}, []);
+
+	useEffect(() => {
+		const saveDataToStorage = async () => {
+			const dataToSave = {
+				nameRest: "Teste 12312312",
+				valor: "teste",
+				produtor: "teste",
+				distancia: "teste",
+			};
+
+			try {
+				await AsyncStorage.setItem(
+					"productData",
+					JSON.stringify(dataToSave)
+				);
+				setProductData(dataToSave);
+			} catch (error) {
+				console.error("Error saving data:", error);
+			}
+		};
+		saveDataToStorage();
+	}, []);
 	return (
 		<View style={styles.card}>
 			<View style={{ flexDirection: "row" }}>
@@ -8,15 +45,14 @@ export default function MatchesBox() {
 					<Image />
 				</View>
 				<View style={styles.information}>
-					<Text style={styles.nameRest}>{restaurantData?.nameRest}</Text>
-					<Text style={styles.address}>{restaurantData?.address}</Text>
+					<Text style={styles.nameRest}>{productData?.nameRest}</Text>
+					<Text style={styles.address}>{productData?.valor}</Text>
 					<View style={styles.productSection}>
 						<View>
-							<Text style={styles.product}>{restaurantData?.product}</Text>
+							<Text style={styles.product}>{productData?.productor}</Text>
 						</View>
 						<View>
-							<Text style={styles.quantity}>{restaurantData?.quantity}</Text>
-							<Text style={styles.un}>unidades</Text>
+							<Text style={styles.quantity}>{productData?.distancia}</Text>
 						</View>
 					</View>
 				</View>
