@@ -14,7 +14,6 @@ function Title({title}){
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "red",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
