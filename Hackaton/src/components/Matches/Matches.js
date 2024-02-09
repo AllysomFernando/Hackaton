@@ -1,48 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Text, StatusBar, Image } from "react-native";
-import ButtonChat from "../ButtonConversar/ButtonChat";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React from "react";
 
-export default function Propose() {
-	const [restaurantData, setRestaurantData] = useState(null);
-
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const savedData = await AsyncStorage.getItem("restaurantData");
-				if (savedData) {
-					setRestaurantData(JSON.parse(savedData));
-				}
-			} catch (error) {
-				console.error("Error retrieving data:", error);
-			}
-		};
-		fetchData();
-	}, []);
-
-	useEffect(() => {
-		const saveDataToStorage = async () => {
-			const dataToSave = {
-				nameRest: "Teste 12312312",
-				address: "teste",
-				quantity: "teste",
-				seasonality: "teste",
-				product: "teste",
-				un: "10",
-			};
-
-			try {
-				await AsyncStorage.setItem(
-					"restaurantData",
-					JSON.stringify(dataToSave)
-				);
-				setRestaurantData(dataToSave);
-			} catch (error) {
-				console.error("Error saving data:", error);
-			}
-		};
-        saveDataToStorage();
-	}, []);
+export default function MatchesBox() {
 	return (
 		<View style={styles.card}>
 			<View style={{ flexDirection: "row" }}>

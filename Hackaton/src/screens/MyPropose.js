@@ -3,15 +3,17 @@ import { View, Text, StyleSheet } from "react-native";
 import Header from "../components/Header/Header";
 import MyTitle from "../components/Title/Title";
 import Propose from "../components/Propose/Propose";
-import Footer from "../components/Footer/FooterImage";
+import Footer from "../components/Footer/Footer";
 
 function MyProducts() {
 	return (
-		<View>
+		<View style={{flexDirection: "column"}}>
 			<Header />
-			<MyTitle title="Seus Produtos" />
+			<MyTitle title="Suas Propostas" />
 			<Propose nameRest="nameRest" adress="adress"/>
-			<Footer/>
+			<View style={{height: 455 }}></View>
+            <Footer/> 
+            
 		</View>
 	);
 }
