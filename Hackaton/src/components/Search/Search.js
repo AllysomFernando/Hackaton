@@ -34,11 +34,11 @@ export default function Search({ onSave }) {
 		<View style={styles.formContainer}>
 			<TextInput
 				style={styles.input}
-				placeholder="Nome da Fruta"
+				placeholder="Nome do Produto"
 				value={fruitName}
 				onChangeText={(text) => setFruitName(text)}
 			/>
-			<Button title="Salvar Fruta" onPress={handleSubmit} />
+			<Button title="Salvar Produto" onPress={handleSubmit} />
 		</View>
 	);
 }
