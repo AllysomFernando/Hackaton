@@ -1,0 +1,26 @@
+import React from "react";
+import { View, StyleSheet, Text, StatusBar, TouchableOpacity} from "react-native";
+
+export default function ButtonSearch(){
+    const onPressButton = () => {
+        Alert.alert('Botão pressionado!');
+      };
+    
+      return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <TouchableOpacity onPress={onPressButton} style={styles.container}>
+            <Text style={{ color: 'white' }}>Adicionar item</Text>
+          </TouchableOpacity>
+        </View>
+      );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        padding: 10, 
+        backgroundColor: '#B9B9B9',
+        borderRadius: 10,
+        width: 150,
+        alignItems: 'center',
+    },
+})
